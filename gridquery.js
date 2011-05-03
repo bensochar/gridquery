@@ -46,13 +46,14 @@
 		viewportChange = function() {
 			var oldClassNames,
 				classNames = oldClassNames = documentElement.className.replace(/(\s|\b)+grid-(lt|gt)*\d+(\b|\s)+/g, ''),
-				viewportWidth = win.innerWidth || documentElement.clientWidth,
+				viewportWidth = documentElement.clientWidth,
 				bucket = [],
-				maxWidth = viewportMinColumns;
+				viewportMaxColumns = viewportMinColumns,
+				col;
 
-			for (col in viewportColumns) maxWidth = Math.max(maxWidth, viewportWidth >= viewportColumns[col] ? col : 0);
+			for (col in viewportColumns) viewportMaxColumns = Math.max(viewportMaxColumns, viewportWidth >= viewportColumns[col] ? col : 0);
 
-			bucket.push('grid-'+maxWidth);
+			bucket.push('grid-'+viewportMaxColumns);
 
 			for (col in viewportColumns) {
 				bucket.push('grid-'+(viewportWidth >= viewportColumns[col] ? 'gt' : 'lt')+col);
